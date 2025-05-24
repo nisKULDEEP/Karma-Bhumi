@@ -1,15 +1,25 @@
-import { DashboardSkeleton } from "@/components/skeleton-loaders/dashboard-skeleton";
-import useAuth from "@/hooks/api/use-auth";
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuthContext } from "@/context/auth-provider";
+import AppLayout from "@/components/layout/AppLayout";
 
-const ProtectedRoute = () => {
-  const { data: authData, isLoading } = useAuth();
-  const user = authData?.user;
+export default function ProtectedRoute() {
+  const { isAuthenticated, isLoading } = useAuthContext();
 
   if (isLoading) {
-    return <DashboardSkeleton />;
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      </div>
+    );
   }
-  return user ? <Outlet /> : <Navigate to="/" replace />;
-};
 
-export default ProtectedRoute;
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <AppLayout>
+      <Outlet />
+    </AppLayout>
+  );
+}

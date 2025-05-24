@@ -1,4 +1,4 @@
-import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
+import { TaskPriorityEnum, TaskStatusEnum } from "@/types/task.types";
 import { transformOptions } from "@/lib/helper";
 import {
   ArrowDown,

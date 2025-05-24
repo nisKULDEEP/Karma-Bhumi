@@ -2,14 +2,14 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import {
   Form,
   FormControl,
@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import Logo from "@/components/logo";
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
 import { useMutation } from "@tanstack/react-query";
-import { loginMutationFn } from "@/lib/api";
+import { loginMutationFn } from "@/lib/api/index";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
 
@@ -50,6 +50,7 @@ const SignIn = () => {
       email: "",
       password: "",
     },
+    mode: "onTouched", // Only validate fields after they've been touched
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -79,8 +80,8 @@ const SignIn = () => {
           to="/"
           className="flex items-center gap-2 self-center font-medium"
         >
-          <Logo />
-          Team Sync.
+          <Logo renderLink={false} />
+          KarmaBhumi
         </Link>
         <div className="flex flex-col gap-6">
           <Card>

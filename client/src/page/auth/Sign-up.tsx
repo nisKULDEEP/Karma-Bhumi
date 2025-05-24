@@ -2,14 +2,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { Loader } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import {
   Form,
   FormControl,
@@ -22,26 +23,22 @@ import { Input } from "@/components/ui/input";
 import Logo from "@/components/logo";
 import GoogleOauthButton from "@/components/auth/google-oauth-button";
 import { useMutation } from "@tanstack/react-query";
-import { registerMutationFn } from "@/lib/api";
+import { registerMutationFn } from "@/lib/api/index";
 import { toast } from "@/hooks/use-toast";
-import { Loader } from "lucide-react";
 
 const SignUp = () => {
   const navigate = useNavigate();
-
   const { mutate, isPending } = useMutation({
     mutationFn: registerMutationFn,
   });
+
   const formSchema = z.object({
-    name: z.string().trim().min(1, {
-      message: "Name is required",
-    }),
-    email: z.string().trim().email("Invalid email address").min(1, {
-      message: "Workspace name is required",
-    }),
-    password: z.string().trim().min(1, {
-      message: "Password is required",
-    }),
+    name: z.string().trim().min(1, "Name is required"),
+    email: z.string().trim().email("Invalid email address"),
+    password: z
+      .string()
+      .trim()
+      .min(8, "Password must be at least 8 characters"),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -51,16 +48,18 @@ const SignUp = () => {
       email: "",
       password: "",
     },
+    mode: "onTouched", // Only validate fields after they've been touched
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     if (isPending) return;
+
     mutate(values, {
       onSuccess: () => {
-        navigate("/");
+        // Redirect to onboarding after successful registration
+        navigate("/onboarding");
       },
       onError: (error) => {
-        console.log(error);
         toast({
           title: "Error",
           description: error.message,
@@ -78,14 +77,14 @@ const SignUp = () => {
           className="flex items-center gap-2 self-center font-medium"
         >
           <Logo />
-          Team Sync.
+          KarmaBhumi
         </Link>
         <div className="flex flex-col gap-6">
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="text-xl">Create an account</CardTitle>
               <CardDescription>
-                Signup with your Email or Google account
+                Sign up with Google or create an account with email
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -93,89 +92,87 @@ const SignUp = () => {
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                   <div className="grid gap-6">
                     <div className="flex flex-col gap-4">
-                      <GoogleOauthButton label="Signup" />
+                      <GoogleOauthButton label="Sign up" />
                     </div>
+
                     <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                       <span className="relative z-10 bg-background px-2 text-muted-foreground">
                         Or continue with
                       </span>
                     </div>
-                    <div className="grid gap-2">
-                      <div className="grid gap-2">
-                        <FormField
-                          control={form.control}
-                          name="name"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                Name
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Joh Doe"
-                                  className="!h-[48px]"
-                                  {...field}
-                                />
-                              </FormControl>
 
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <FormField
-                          control={form.control}
-                          name="email"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                Email
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="m@example.com"
-                                  className="!h-[48px]"
-                                  {...field}
-                                />
-                              </FormControl>
+                    <div className="grid gap-4">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                              Full name
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="John Doe"
+                                className="!h-[48px]"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <div className="grid gap-2">
-                        <FormField
-                          control={form.control}
-                          name="password"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel className="dark:text-[#f1f7feb5] text-sm">
-                                Password
-                              </FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="password"
-                                  className="!h-[48px]"
-                                  {...field}
-                                />
-                              </FormControl>
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                              Email
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                type="email"
+                                placeholder="m@example.com"
+                                className="!h-[48px]"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
 
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
-                      <Button
-                        type="submit"
-                        disabled={isPending}
-                        className="w-full"
-                      >
-                        {isPending && <Loader className="animate-spin" />}
-                        Sign up
-                      </Button>
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="dark:text-[#f1f7feb5] text-sm">
+                              Password
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                type="password"
+                                className="!h-[48px]"
+                                {...field}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
+
+                    <Button
+                      disabled={isPending}
+                      type="submit"
+                      className="w-full !h-[48px]"
+                    >
+                      {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+                      Sign up
+                    </Button>
+
                     <div className="text-center text-sm">
                       Already have an account?{" "}
                       <Link to="/" className="underline underline-offset-4">
@@ -187,8 +184,8 @@ const SignUp = () => {
               </Form>
             </CardContent>
           </Card>
-          <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary  ">
-            By clicking continue, you agree to our{" "}
+          <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4 [&_a]:hover:text-primary">
+            By signing up, you agree to our{" "}
             <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
           </div>
         </div>

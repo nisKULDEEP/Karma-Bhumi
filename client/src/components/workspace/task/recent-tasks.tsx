@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
+import { Badge } from "@/components/ui/Badge";
+import { TaskPriorityEnum, TaskStatusEnum } from "@/types/task.types";
 import useWorkspaceId from "@/hooks/use-workspace-id";
-import { getAllTasksQueryFn } from "@/lib/api";
+import { getAllTasksQueryFn } from "@/lib/api/index";
 import {
   getAvatarColor,
   getAvatarFallbackText,

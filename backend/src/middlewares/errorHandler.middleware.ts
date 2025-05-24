@@ -41,8 +41,16 @@ export const errorHandler: ErrorRequestHandler = (
     });
   }
 
+  // Special handling for MongoDB transaction errors
+  if (error?.message?.includes("Transaction") && error?.message?.includes("replica set")) {
+    return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+      message: "Database transaction error: Your MongoDB instance needs to be running as a replica set to support transactions. Please check your database configuration.",
+      technicalDetails: "For local development, consider using a non-transactional approach."
+    });
+  }
+
   return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
-    message: "Internal Server Error",
-    error: error?.message || "Unknow error occurred",
+    message: error?.message || "Unknown error occurred", // Show actual error message to the user
+    technicalDetails: error?.stack || "No stack trace available" // Include stack trace for debugging
   });
 };

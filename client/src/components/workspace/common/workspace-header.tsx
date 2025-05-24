@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { useAuthContext } from "@/context/auth-provider";
 import { Loader } from "lucide-react";
 

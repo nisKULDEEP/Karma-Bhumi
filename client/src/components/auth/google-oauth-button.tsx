@@ -1,11 +1,11 @@
-import { baseURL } from "@/lib/base-url";
-import { Button } from "../ui/button";
+import { API_BASE_URL } from "@/lib/base-url";
+import { Button } from "../ui/Button";
 
 const GoogleOauthButton = (props: { label: string }) => {
   const { label } = props;
 
   const handleClick = () => {
-    window.location.href = `${baseURL}/auth/google`;
+    window.location.href = `${API_BASE_URL}/auth/google`;
   };
   return (
     <Button

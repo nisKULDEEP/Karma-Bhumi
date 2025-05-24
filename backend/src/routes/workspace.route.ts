@@ -6,6 +6,7 @@ import {
   getAllWorkspacesUserIsMemberController,
   getWorkspaceAnalyticsController,
   getWorkspaceByIdController,
+  getWorkspaceByInviteCodeController,
   getWorkspaceMembersController,
   updateWorkspaceByIdController,
 } from "../controllers/workspace.controller";
@@ -26,6 +27,9 @@ workspaceRoutes.get("/all", getAllWorkspacesUserIsMemberController);
 
 workspaceRoutes.get("/members/:id", getWorkspaceMembersController);
 workspaceRoutes.get("/analytics/:id", getWorkspaceAnalyticsController);
+
+// Public route to get workspace info from invite code
+workspaceRoutes.get("/invite/:inviteCode", getWorkspaceByInviteCodeController);
 
 workspaceRoutes.get("/:id", getWorkspaceByIdController);
 

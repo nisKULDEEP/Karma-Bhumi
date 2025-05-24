@@ -107,6 +107,7 @@ export type AllMembersInWorkspaceResponseType = {
   message: string;
   members: {
     _id: string;
+    // This represents the populated user document, not just the ID
     userId: {
       _id: string;
       name: string;
@@ -122,6 +123,16 @@ export type AllMembersInWorkspaceResponseType = {
     createdAt: string;
   }[];
   roles: RoleType[];
+};
+
+// Alternative type that would match the database structure before population
+export type MemberRawType = {
+  _id: string;
+  userId: string; // Just the ID reference as stored in the database
+  workspaceId: string;
+  role: string; // Just the role ID
+  joinedAt: string;
+  createdAt: string;
 };
 
 export type AnalyticsResponseType = {
@@ -265,4 +276,75 @@ export type AllTaskResponseType = {
   message: string;
   tasks: TaskType[];
   pagination: PaginationType;
+};
+
+export type TaskStatusType = {
+  name: string;
+  color: string;
+};
+
+export type ProjectTemplateType = {
+  _id: string;
+  name: string;
+  description: string;
+  category: string;
+  defaultView: string;
+  taskStatuses: TaskStatusType[];
+};
+
+export type ProjectSetupResponseType = {
+  message: string;
+  workspace: WorkspaceType;
+};
+
+export type ProjectTemplatesResponseType = {
+  message: string;
+  templates: ProjectTemplateType[];
+};
+
+//******** */ TEAM TYPES ****************
+// ******************************************
+export type TeamType = {
+  _id: string;
+  name: string;
+  description?: string;
+  workspace: string;
+  organization: string;
+  owner: string;
+  memberCount?: number;
+  projectCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type TeamMemberType = {
+  _id: string;
+  userId: {
+    _id: string;
+    name: string;
+    email: string;
+    profilePicture: string | null;
+  };
+  teamId: string;
+  role: {
+    _id: string;
+    name: string;
+  };
+  joinedAt: string;
+  createdAt: string;
+};
+
+export type TeamResponseType = {
+  message: string;
+  team: TeamType;
+};
+
+export type AllTeamsResponseType = {
+  message: string;
+  teams: TeamType[];
+};
+
+export type TeamMembersResponseType = {
+  message: string;
+  members: TeamMemberType[];
 };

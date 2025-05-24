@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
 import { Loader } from "lucide-react";

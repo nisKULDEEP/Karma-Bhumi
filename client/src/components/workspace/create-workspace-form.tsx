@@ -11,10 +11,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Textarea } from "../ui/textarea";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createWorkspaceMutationFn } from "@/lib/api";
+import { createWorkspaceMutationFn } from "@/lib/api/index";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
 import { Loader } from "lucide-react";
@@ -45,6 +45,7 @@ export default function CreateWorkspaceForm({
       name: "",
       description: "",
     },
+    mode: "onTouched", // Only validate fields after they've been touched
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {

@@ -4,9 +4,10 @@ import CreateTaskDialog from "../task/create-task-dialog";
 import EditProjectDialog from "./edit-project-dialog";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getProjectByIdQueryFn } from "@/lib/api";
+import { getProjectByIdQueryFn } from "@/lib/api/index";
 import PermissionsGuard from "@/components/resuable/permission-guard";
 import { Permissions } from "@/constant";
+import ProjectViewSelector from "./project-view-selector";
 
 const ProjectHeader = () => {
   const param = useParams();
@@ -52,7 +53,10 @@ const ProjectHeader = () => {
           <EditProjectDialog project={project} />
         </PermissionsGuard>
       </div>
-      <CreateTaskDialog projectId={projectId} />
+      <div className="flex items-center gap-3">
+        <ProjectViewSelector workspaceId={workspaceId} projectId={projectId} />
+        <CreateTaskDialog projectId={projectId} />
+      </div>
     </div>
   );
 };

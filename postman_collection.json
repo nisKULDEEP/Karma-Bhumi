@@ -1,0 +1,305 @@
+{
+  "info": {
+    "name": "KarmaBhumi API Collection",
+    "description": "API collection for the KarmaBhumi B2B Project Management SaaS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication related endpoints",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "name": "Test User",
+                "email": "test@example.com",
+                "password": "password123"
+              }
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "email": "test@example.com",
+                "password": "password123"
+              }
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/auth/logout"
+          }
+        },
+        {
+          "name": "Google Login",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/auth/google"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "description": "User management endpoints",
+      "item": [
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/user/current"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workspace",
+      "description": "Workspace management endpoints",
+      "item": [
+        {
+          "name": "Create Workspace",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/workspace/create/new",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "name": "My Workspace",
+                "description": "Description of workspace"
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Workspace",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/workspace/update/:id",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "name": "Updated Workspace",
+                "description": "Updated description"
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Workspace",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/workspace/delete/:id"
+          }
+        },
+        {
+          "name": "Get All Workspaces",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/workspace/all"
+          }
+        },
+        {
+          "name": "Get Workspace Members",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/workspace/members/:id"
+          }
+        },
+        {
+          "name": "Get Workspace Analytics",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/workspace/analytics/:id"
+          }
+        },
+        {
+          "name": "Get Workspace By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/workspace/:id"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Project",
+      "description": "Project management endpoints",
+      "item": [
+        {
+          "name": "Create Project",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/project/workspace/:workspaceId/create",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "emoji": "📊",
+                "name": "New Project",
+                "description": "Project description"
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/project/:id/workspace/:workspaceId/update",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "emoji": "📊",
+                "name": "Updated Project",
+                "description": "Updated description"
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/project/:id/workspace/:workspaceId/delete"
+          }
+        },
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/project/workspace/:workspaceId/all"
+          }
+        },
+        {
+          "name": "Get Project Analytics",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/project/:id/workspace/:workspaceId/analytics"
+          }
+        },
+        {
+          "name": "Get Project By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/project/:id/workspace/:workspaceId"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Task",
+      "description": "Task management endpoints",
+      "item": [
+        {
+          "name": "Create Task",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/task/project/:projectId/workspace/:workspaceId/organization/:organizationId/team/:teamId/create",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "title": "New Task",
+                "description": "Task description",
+                "priority": "HIGH",
+                "status": "TODO",
+                "assignedTo": ["userId"],
+                "dueDate": "2025-04-30T00:00:00.000Z"
+              }
+            }
+          }
+        },
+        {
+          "name": "Update Task",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/task/:id/project/:projectId/workspace/:workspaceId/update",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "title": "Updated Task",
+                "description": "Updated description",
+                "priority": "HIGH",
+                "status": "IN_PROGRESS"
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete Task",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/task/:id/workspace/:workspaceId/delete"
+          }
+        },
+        {
+          "name": "Get All Tasks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/task/workspace/:workspaceId/all"
+          }
+        },
+        {
+          "name": "Get Task By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/task/:id/project/:projectId/workspace/:workspaceId"
+          }
+        },
+        {
+          "name": "Update Task Status",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/task/:id/workspace/:workspaceId/project/:projectId/status",
+            "body": {
+              "mode": "raw",
+              "raw": {
+                "status": "IN_PROGRESS"
+              }
+            }
+          }
+        },
+        {
+          "name": "Get Tasks Board",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/task/workspace/:workspaceId/project/:projectId/board"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Member",
+      "description": "Member management endpoints",
+      "item": [
+        {
+          "name": "Join Workspace",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/member/workspace/:inviteCode/join"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ]
+}

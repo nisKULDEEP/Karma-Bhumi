@@ -25,7 +25,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { ChevronDown } from "lucide-react";
 import TableSkeleton from "@/components/skeleton-loaders/table-skeleton";
 import { DataTablePagination } from "./table-pagination";

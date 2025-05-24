@@ -1,26 +1,29 @@
-import { useState } from "react";
-import { Plus } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import CreateTaskForm from "./create-task-form";
+import useCreateTaskDialog from "@/hooks/use-create-task-dialog";
+import { Plus } from "lucide-react";
 
-const CreateTaskDialog = (props: { projectId?: string }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const CreateTaskDialog = (props: { projectId?: string; hideButton?: boolean }) => {
+  const { open, initialStatus, onClose, onOpen } = useCreateTaskDialog();
 
-  const onClose = () => {
-    setIsOpen(false);
-  };
   return (
     <div>
-      <Dialog modal={true} open={isOpen} onOpenChange={setIsOpen}>
-        <DialogTrigger>
-          <Button>
-            <Plus />
-            New Task
-          </Button>
-        </DialogTrigger>
+      <Dialog modal={true} open={open} onOpenChange={(isOpen) => isOpen ? onOpen() : onClose()}>
+        {!props.hideButton && (
+          <DialogTrigger>
+            <Button>
+              <Plus />
+              New Task
+            </Button>
+          </DialogTrigger>
+        )}
         <DialogContent className="sm:max-w-lg max-h-auto my-5 border-0">
-          <CreateTaskForm projectId={props.projectId} onClose={onClose} />
+          <CreateTaskForm 
+            projectId={props.projectId} 
+            initialStatus={initialStatus}
+            onClose={onClose} 
+          />
         </DialogContent>
       </Dialog>
     </div>

@@ -1,6 +1,6 @@
 import Logo from "@/components/logo";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/Button";
+import { Card, CardContent } from "@/components/ui/Card";
 import { Link, useNavigate } from "react-router-dom";
 
 const GoogleOAuthFailure = () => {
@@ -14,7 +14,7 @@ const GoogleOAuthFailure = () => {
           className="flex items-center gap-2 self-center font-medium"
         >
           <Logo />
-          Team Sync.
+          KarmaBhumi
         </Link>
         <div className="flex flex-col gap-6"></div>
       </div>

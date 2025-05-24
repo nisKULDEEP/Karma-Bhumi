@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { getProjectsInWorkspaceQueryFn } from "@/lib/api";
+import { getProjectsInWorkspaceQueryFn } from "@/lib/api/index";
 import { AllProjectPayloadType } from "@/types/api.type";
 
 const useGetProjectsInWorkspaceQuery = ({

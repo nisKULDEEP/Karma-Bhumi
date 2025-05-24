@@ -1,7 +1,7 @@
 import { ChevronDown, Loader } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { Button } from "@/components/ui/Button";
 
 import {
   Command,
@@ -21,7 +21,7 @@ import { useAuthContext } from "@/context/auth-provider";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import useGetWorkspaceMembers from "@/hooks/api/use-get-workspace-members";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { changeWorkspaceMemberRoleMutationFn } from "@/lib/api";
+import { changeWorkspaceMemberRoleMutationFn } from "@/lib/api/index";
 import { toast } from "@/hooks/use-toast";
 import { Permissions } from "@/constant";
 const AllMembers = () => {
@@ -81,7 +81,7 @@ const AllMembers = () => {
         const initials = getAvatarFallbackText(name);
         const avatarColor = getAvatarColor(name);
         return (
-          <div className="flex items-center justify-between space-x-4">
+          <div className="flex items-center justify-between space-x-4" key={member.userId._id}>
             <div className="flex items-center space-x-4">
               <Avatar className="h-8 w-8">
                 <AvatarImage
@@ -137,9 +137,9 @@ const AllMembers = () => {
                                 (role) =>
                                   role.name !== "OWNER" && (
                                     <CommandItem
-                                      key={role._id}
+                                      key={`${role._id}-${member.userId._id}`}
                                       disabled={isLoading}
-                                      className="disabled:pointer-events-none gap-1 mb-1  flex flex-col items-start px-4 py-2 cursor-pointer"
+                                      className="disabled:pointer-events-none gap-1 mb-1 flex flex-col items-start px-4 py-2 cursor-pointer"
                                       onSelect={() => {
                                         handleSelect(
                                           role._id,

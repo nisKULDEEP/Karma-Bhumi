@@ -6,6 +6,8 @@ export interface WorkspaceDocument extends Document {
   description: string;
   owner: mongoose.Types.ObjectId;
   inviteCode: string;
+  organization: mongoose.Types.ObjectId;
+  team: mongoose.Types.ObjectId | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -25,11 +27,25 @@ const workspaceSchema = new Schema<WorkspaceDocument>(
       unique: true,
       default: generateInviteCode,
     },
+    organization: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Organization",
+      required: true,
+    },
+    team: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
+      default: null,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+// Create indexes for efficient lookup
+workspaceSchema.index({ organization: 1 });
+workspaceSchema.index({ team: 1 });
 
 workspaceSchema.methods.resetInviteCode = function () {
   this.inviteCode = generateInviteCode();

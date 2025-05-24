@@ -21,6 +21,7 @@ import { getMemberRoleInWorkspace } from "../services/member.service";
 import { Permissions } from "../enums/role.enum";
 import { roleGuard } from "../utils/roleGuard";
 import { updateWorkspaceSchema } from "../validation/workspace.validation";
+import WorkspaceModel from "../models/workspace.model";
 
 export const createWorkspaceController = asyncHandler(
   async (req: Request, res: Response) => {
@@ -166,5 +167,47 @@ export const deleteWorkspaceByIdController = asyncHandler(
       message: "Workspace deleted successfully",
       currentWorkspace,
     });
+  }
+);
+
+/**
+ * Get workspace information by invite code (public route)
+ * Used to show workspace name on the invitation page
+ */
+export const getWorkspaceByInviteCodeController = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { inviteCode } = req.params;
+
+    if (!inviteCode) {
+      return res.status(HTTPSTATUS.BAD_REQUEST).json({
+        message: "Invite code is required"
+      });
+    }
+
+    try {
+      // Find the workspace with this invite code
+      const workspace = await WorkspaceModel.findOne({ inviteCode })
+        .select('name description createdAt'); // Only send necessary fields
+      
+      if (!workspace) {
+        return res.status(HTTPSTATUS.NOT_FOUND).json({
+          message: "Workspace not found or invalid invite code"
+        });
+      }
+
+      return res.status(HTTPSTATUS.OK).json({
+        message: "Workspace found",
+        workspace: {
+          _id: workspace._id,
+          name: workspace.name,
+          description: workspace.description,
+          createdAt: workspace.createdAt
+        }
+      });
+    } catch (error) {
+      return res.status(HTTPSTATUS.INTERNAL_SERVER_ERROR).json({
+        message: "Failed to fetch workspace information"
+      });
+    }
   }
 );

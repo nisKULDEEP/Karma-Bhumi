@@ -1,6 +1,32 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Package Management
+
+This project uses **npm** as the package manager.
+
+### Common Commands
+
+```bash
+# Install dependencies
+npm install
+
+# Add a new dependency
+npm install package-name
+
+# Add a dev dependency
+npm install -D package-name
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Run linting
+npm run lint
+```
+
+## Vite Configuration
 
 Currently, two official plugins are available:
 

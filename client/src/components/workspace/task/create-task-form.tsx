@@ -24,7 +24,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import { Textarea } from "../../ui/textarea";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -34,19 +34,20 @@ import {
   transformOptions,
 } from "@/lib/helper";
 import useWorkspaceId from "@/hooks/use-workspace-id";
-import { TaskPriorityEnum, TaskStatusEnum } from "@/constant";
 import useGetProjectsInWorkspaceQuery from "@/hooks/api/use-get-projects";
 import useGetWorkspaceMembers from "@/hooks/api/use-get-workspace-members";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { createTaskMutationFn } from "@/lib/api";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { createTaskMutationFn } from "@/lib/api/task.api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
+import { TaskPriorityEnum, TaskStatusEnum } from "@/types/task.types";
 
 export default function CreateTaskForm(props: {
   projectId?: string;
+  initialStatus?: string;
   onClose: () => void;
 }) {
-  const { projectId, onClose } = props;
+  const { projectId, initialStatus, onClose } = props;
 
   const queryClient = useQueryClient();
   const workspaceId = useWorkspaceId();
@@ -106,18 +107,12 @@ export default function CreateTaskForm(props: {
     projectId: z.string().trim().min(1, {
       message: "Project is required",
     }),
-    status: z.enum(
-      Object.values(TaskStatusEnum) as [keyof typeof TaskStatusEnum],
-      {
-        required_error: "Status is required",
-      }
-    ),
-    priority: z.enum(
-      Object.values(TaskPriorityEnum) as [keyof typeof TaskPriorityEnum],
-      {
-        required_error: "Priority is required",
-      }
-    ),
+    status: z.nativeEnum(TaskStatusEnum, {
+      required_error: "Status is required",
+    }),
+    priority: z.nativeEnum(TaskPriorityEnum, {
+      required_error: "Priority is required",
+    }),
     assignedTo: z.string().trim().min(1, {
       message: "AssignedTo is required",
     }),
@@ -126,13 +121,18 @@ export default function CreateTaskForm(props: {
     }),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  type FormValues = z.infer<typeof formSchema>;
+
+  const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
       description: "",
       projectId: projectId ? projectId : "",
+      status: initialStatus ? (initialStatus as TaskStatusEnum) : TaskStatusEnum.TODO,
+      priority: TaskPriorityEnum.MEDIUM,
     },
+    mode: "onTouched", // Only validate fields after they've been touched
   });
 
   const taskStatusList = Object.values(TaskStatusEnum);
@@ -141,7 +141,7 @@ export default function CreateTaskForm(props: {
   const statusOptions = transformOptions(taskStatusList);
   const priorityOptions = transformOptions(taskPriorityList);
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = (values: FormValues) => {
     if (isPending) return;
     const payload = {
       workspaceId,

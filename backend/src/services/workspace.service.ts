@@ -67,8 +67,10 @@ export const getAllWorkspacesUserIsMemberService = async (userId: string) => {
     .select("-password")
     .exec();
 
-  // Extract workspace details from memberships
-  const workspaces = memberships.map((membership) => membership.workspaceId);
+  // Extract workspace details from memberships and filter out null values
+  const workspaces = memberships
+    .map((membership) => membership.workspaceId)
+    .filter(workspace => workspace !== null);
 
   return { workspaces };
 };
@@ -238,7 +240,7 @@ export const deleteWorkspaceService = async (
         session
       );
       // Update the user's currentWorkspace
-      user.currentWorkspace = memberWorkspace
+      user.currentWorkspace = memberWorkspace && memberWorkspace.workspaceId
         ? memberWorkspace.workspaceId
         : null;
 

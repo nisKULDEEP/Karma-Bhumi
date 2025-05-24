@@ -1,34 +1,84 @@
-export const TaskStatusEnum = {
-  BACKLOG: "BACKLOG",
-  TODO: "TODO",
-  IN_PROGRESS: "IN_PROGRESS",
-  IN_REVIEW: "IN_REVIEW",
-  DONE: "DONE",
-} as const;
-
-export const TaskPriorityEnum = {
-  LOW: "LOW",
-  MEDIUM: "MEDIUM",
-  HIGH: "HIGH",
-} as const;
-export type TaskStatusEnumType = keyof typeof TaskStatusEnum;
-export type TaskPriorityEnumType = keyof typeof TaskPriorityEnum;
-
+// Constants that aren't types/enums
 export const Permissions = {
+  // Organization permissions
+  CREATE_ORGANIZATION: "CREATE_ORGANIZATION",
+  DELETE_ORGANIZATION: "DELETE_ORGANIZATION",
+  EDIT_ORGANIZATION: "EDIT_ORGANIZATION",
+  MANAGE_ORGANIZATION_SETTINGS: "MANAGE_ORGANIZATION_SETTINGS",
+  
+  // Department permissions
+  CREATE_DEPARTMENT: "CREATE_DEPARTMENT",
+  DELETE_DEPARTMENT: "DELETE_DEPARTMENT",
+  EDIT_DEPARTMENT: "EDIT_DEPARTMENT",
+  MANAGE_DEPARTMENT_SETTINGS: "MANAGE_DEPARTMENT_SETTINGS",
+  
+  // Team permissions
+  CREATE_TEAM: "CREATE_TEAM",
+  DELETE_TEAM: "DELETE_TEAM",
+  EDIT_TEAM: "EDIT_TEAM",
+  MANAGE_TEAM_SETTINGS: "MANAGE_TEAM_SETTINGS",
+  VIEW_TEAM: "VIEW_TEAM",
+  
+  // Workspace permissions
   CREATE_WORKSPACE: "CREATE_WORKSPACE",
   DELETE_WORKSPACE: "DELETE_WORKSPACE",
   EDIT_WORKSPACE: "EDIT_WORKSPACE",
   MANAGE_WORKSPACE_SETTINGS: "MANAGE_WORKSPACE_SETTINGS",
+  
+  // Member management permissions
   ADD_MEMBER: "ADD_MEMBER",
   CHANGE_MEMBER_ROLE: "CHANGE_MEMBER_ROLE",
   REMOVE_MEMBER: "REMOVE_MEMBER",
+  INVITE_MEMBERS: "INVITE_MEMBERS",
+  
+  // Project permissions
   CREATE_PROJECT: "CREATE_PROJECT",
   EDIT_PROJECT: "EDIT_PROJECT",
   DELETE_PROJECT: "DELETE_PROJECT",
+  MANAGE_PROJECT: "MANAGE_PROJECT",
+  
+  // Board permissions
+  CREATE_BOARD: "CREATE_BOARD",
+  EDIT_BOARD: "EDIT_BOARD",
+  DELETE_BOARD: "DELETE_BOARD",
+  CHANGE_BOARD_TYPE: "CHANGE_BOARD_TYPE",
+  
+  // Epic permissions
+  CREATE_EPIC: "CREATE_EPIC",
+  EDIT_EPIC: "EDIT_EPIC",
+  DELETE_EPIC: "DELETE_EPIC",
+  
+  // Task permissions
   CREATE_TASK: "CREATE_TASK",
   EDIT_TASK: "EDIT_TASK",
   DELETE_TASK: "DELETE_TASK",
+  COMMENT_ON_TASK: "COMMENT_ON_TASK",
+  ASSIGN_TASK: "ASSIGN_TASK",
+  CREATE_SUBTASK: "CREATE_SUBTASK",
+  
+  // Sprint permissions
+  CREATE_SPRINT: "CREATE_SPRINT",
+  EDIT_SPRINT: "EDIT_SPRINT",
+  DELETE_SPRINT: "DELETE_SPRINT",
+  START_SPRINT: "START_SPRINT",
+  COMPLETE_SPRINT: "COMPLETE_SPRINT",
+  
+  // Time tracking permissions
+  TRACK_TIME: "TRACK_TIME",
+  VIEW_TIME_REPORTS: "VIEW_TIME_REPORTS",
+  EDIT_TIME_ENTRIES: "EDIT_TIME_ENTRIES",
+  
+  // Basic permission
   VIEW_ONLY: "VIEW_ONLY",
 } as const;
 
 export type PermissionType = keyof typeof Permissions;
+
+// Re-export task enums and types from the types folder for backward compatibility
+// This allows existing code to continue working while we migrate
+export { 
+  TaskStatusEnum, 
+  TaskPriorityEnum,
+  type TaskStatusEnumType,
+  type TaskPriorityEnumType 
+} from "@/types/task.types";

@@ -3,6 +3,7 @@ import ProjectModel from "../models/project.model";
 import TaskModel from "../models/task.model";
 import { NotFoundException } from "../utils/appError";
 import { TaskStatusEnum } from "../enums/task.enum";
+import { ProjectTemplateCategory } from "../models/project-template.model";
 
 export const createProjectService = async (
   userId: string,
@@ -11,14 +12,43 @@ export const createProjectService = async (
     emoji?: string;
     name: string;
     description?: string;
+    teamId?: string;
   }
 ) => {
+  // Get the workspace to extract the organization ID
+  const workspace = await import("../models/workspace.model").then(
+    (module) => module.default.findById(workspaceId)
+  );
+  
+  if (!workspace) {
+    throw new Error("Workspace not found");
+  }
+
   const project = new ProjectModel({
     ...(body.emoji && { emoji: body.emoji }),
     name: body.name,
     description: body.description,
     workspace: workspaceId,
     createdBy: userId,
+    owner: userId, // Set the owner to the user creating the project
+    organization: workspace.organization, // Set the organization from the workspace
+    team: body.teamId || null,
+    template: {
+      category: ProjectTemplateCategory.CUSTOM, // Set a default template category
+    },
+    // Set default workflow if needed
+    workflow: {
+      statuses: [
+        { name: "To Do", color: "#E2E8F0", order: 0 },
+        { name: "In Progress", color: "#3182CE", order: 1 },
+        { name: "Done", color: "#48BB78", order: 2 }
+      ],
+      transitions: [
+        { from: "To Do", to: ["In Progress"] },
+        { from: "In Progress", to: ["To Do", "Done"] },
+        { from: "Done", to: ["In Progress"] }
+      ]
+    }
   });
 
   await project.save();

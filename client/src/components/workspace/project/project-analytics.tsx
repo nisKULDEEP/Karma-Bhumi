@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import AnalyticsCard from "../common/analytics-card";
 import useWorkspaceId from "@/hooks/use-workspace-id";
 import { useQuery } from "@tanstack/react-query";
-import { getProjectAnalyticsQueryFn } from "@/lib/api";
+import { getProjectAnalyticsQueryFn } from "@/lib/api/index";
 
 const ProjectAnalytics = () => {
   const param = useParams();

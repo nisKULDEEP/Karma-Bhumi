@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from "@tanstack/react-query";
-import { getWorkspaceByIdQueryFn } from "@/lib/api";
+import { getWorkspaceByIdQueryFn } from "@/lib/api/index";
 import { CustomError } from "@/types/custom-error.type";
 
 const useGetWorkspaceQuery = (workspaceId: string) => {
