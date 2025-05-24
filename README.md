@@ -1,21 +1,8 @@
-# 🌟 Advanced MERN B2B Teams Project Management SaaS - *TeamSync*  
-
-## 🎥 Watch the Full Video on YouTube  
-**[Subscribe to the Channel](https://tinyurl.com/subcribe-to-techwithEmma)** to stay updated with more exciting projects and tutorials!  
-
----
-
-## ❤️ Support the Channel
-If you love this project and want to see more, consider supporting the channel:
-- Give this repository a ⭐️ on GitHub.
-- **[Buy Me a Coffee](https://www.buymeacoffee.com/techwithemmaofficial)** to help fund more educational content.  
-- Like, share, and subscribe to the channel for more tutorials and updates!
-
----
+# 🌟 KarmaBhumi B2B Teams Project Management SaaS  
 
 ## 📌 Project Overview  
 
-Welcome to **TeamSync**, a powerful and scalable multi-tenancy project management system built with **Node.js**, **MongoDB**, and **React**. Designed for real-world B2B needs, this project delivers features like Google Sign-In, workspace management, project tracking, task collaboration, role-based permissions, and more. Perfect for developers aiming to create SaaS-based team collaboration platforms.  
+Welcome to **KarmaBhumi**, a powerful and scalable multi-tenancy project management system built with **Node.js**, **MongoDB**, and **React**. Designed for real-world B2B needs, this project delivers features like Google Sign-In, workspace management, project tracking, task collaboration, role-based permissions, and more. Perfect for developers aiming to create SaaS-based team collaboration platforms.  
 
 ---
 
@@ -89,7 +76,7 @@ Access the backend at `http://localhost:8000`.
 
 ---
 
-## 🌐 Deploying TeamSync  
+## 🌐 Deploying KarmaBhumi  
 
 ### 1. Add Environment Variables  
 Add the `.env` variables to your hosting platform (e.g., Vercel).  
@@ -104,13 +91,13 @@ Deploy your app using your preferred method to make it live.
 **🚀 Deepen Your Understanding!**  
 We’ve developed an all-encompassing guide for this project that explains:  
 
-- The architecture and design principles behind TeamSync  
+- The architecture and design principles behind KarmaBhumi  
 - Step-by-step breakdowns of each feature  
 - Advanced techniques for implementing seeding, Mongoose transactions, and performance optimizations  
 - Insights into multi-tenancy and role-based permission models  
 - Best practices for building scalable SaaS applications  
 
-This guide ensures you gain a thorough understanding of every concept and feature in TeamSync, empowering you to build similar systems or expand upon this project.  
+This guide ensures you gain a thorough understanding of every concept and feature in KarmaBhumi, empowering you to build similar systems or expand upon this project.  
 
 **💡 Ready to learn more?** Check out the full guide now—**[link in the description!](#)**  
 
@@ -120,5 +107,11 @@ This guide ensures you gain a thorough understanding of every concept and featur
 
 Don’t miss out! **[Subscribe to the Channel](https://tinyurl.com/subcribe-to-techwithEmma)** for more amazing content and exciting projects.  
 
-Now, let’s dive into the demo of **TeamSync**! 🚀
+Now, let’s dive into the demo of **KarmaBhumi**! 🚀
 
+# Guidelines - 
+1. No direct use of axios in components, Always put your apis inside src/lib/api folder and export it by index.ts. (Create file if not exist for your type of apis)
+2. All types will be put in appropriate file under src/type folder (Create file if not exist for your type of types)
+3. Whever giving types in client, go through the backend code and reverify the types through schemas and code.
+4. All the files name should be in camelCases. 
+5. Don't do string comparision, Always use enums/types.
